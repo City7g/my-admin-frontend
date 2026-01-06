@@ -22,7 +22,7 @@
           <td class="px-4 py-2 text-slate-600">lindsay.walton@example.com</td>
           <td class="px-4 py-2">
             <span
-              class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-medium bg-gray-200 text-gray-700 border border-gray-600"
+              class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-medium text-gray-700 border border-gray-600"
             >
               Member
             </span>

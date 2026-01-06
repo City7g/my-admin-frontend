@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import Table from './components/Table.vue'
+import Users from './components/Users.vue'
 </script>
 
 <template>
   <div class="my-10 px-4">
-    <Table />
+    <Users />
   </div>
 </template>
 
