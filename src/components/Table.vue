@@ -2,13 +2,15 @@
 import type { User } from '@/types/Users';
 
 defineProps<{
-  items: User[]
+  items: User[] | undefined,
+  isLoading: boolean
 }>()
 </script>
 
 <template>
   <div class="max-w-6xl mx-auto overflow-x-auto rounded-sm border border-gray-300">
-    <table class="whitespace-nowrap w-full text-sm text-left">
+    <h1 v-if="isLoading">Loading</h1>
+    <table v-else class="whitespace-nowrap w-full text-sm text-left">
       <thead class="text-sm font-bold uppercase bg-gray-300">
         <tr>
           <th class="px-4 py-3">Name</th>
