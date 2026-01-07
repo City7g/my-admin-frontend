@@ -12,11 +12,5 @@ onMounted(async () => {
 </script>
 
 <template>
-  <Table :users="users" />
-  
-  <ul>
-    <li v-for="user in users" :key="user.id">
-      {{ user.name }}
-    </li>
-  </ul>
+  <Table :items="users" />
 </template>
