@@ -1,13 +1,11 @@
-<script setup lang="ts">
-import type { User } from '@/types/Users'
-
+<script setup lang="ts" generic="T extends { id: PropertyKey }">
 const props = defineProps<{
-  items: User[],
-  columns: Partial<Record<keyof User, string>>
+  items: T[]
+  columns: Partial<Record<keyof T, string>>
   isLoading: boolean
 }>()
 
-const columnKeys = Object.keys(props.columns) as (keyof User)[];
+const columnKeys = Object.keys(props.columns) as (keyof T)[];
 </script>
 
 <template>

@@ -1,14 +1,16 @@
 <script setup lang="ts">
+import { loadUsers } from '@/api'
 import Table from '@/components/Table.vue'
-import { loadUsers } from '@/api/users';
 import { useQuery } from '@tanstack/vue-query'
 
-const { isPending, isFetching, isError, data: users, error } = useQuery({
+const { isFetching, data: users } = useQuery({
   queryKey: ['users'],
   queryFn: loadUsers
 })
 </script>
 
 <template>
-  <Table :items="users ?? []" :columns="{ id: 'ID', name: 'Name', email: 'Email' }" :isLoading="isFetching" />
+  <div>
+    <Table :items="users ?? []" :columns="{ id: 'ID', name: 'Name', email: 'Email' }" :isLoading="isFetching" />
+  </div>
 </template>
