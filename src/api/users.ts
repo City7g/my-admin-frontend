@@ -2,7 +2,7 @@ import type { User } from '@/types/Users'
 import axios from 'axios'
 
 const loadUsers = async () => {
-  await new Promise(resolve => setTimeout(resolve, 1000))
+  await new Promise(resolve => setTimeout(resolve, +import.meta.env.VITE_TIMEOUT ?? 0))
   const { data } = await axios.get<User[]>(`${import.meta.env.VITE_API_URL}/users`)
   return data
 }

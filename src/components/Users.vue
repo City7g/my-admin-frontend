@@ -10,5 +10,5 @@ const { isPending, isFetching, isError, data: users, error } = useQuery({
 </script>
 
 <template>
-  <Table :items="users" :isLoading="isFetching" />
+  <Table :items="users ?? []" :columns="{ id: 'ID', name: 'Name', email: 'Email' }" :isLoading="isFetching" />
 </template>
