@@ -1,10 +1,11 @@
 <script setup lang="ts" generic="T extends { id: PropertyKey }">
+import Error from './Error.vue';
 import Spinner from './Spinner.vue';
 
 const props = defineProps<{
   items: T[]
   columns: Partial<Record<keyof T, string>>
-  isLoading: boolean
+  status: 'pending' | 'error' | 'success'
 }>()
 
 const columnKeys = Object.keys(props.columns) as (keyof T)[];
@@ -20,10 +21,18 @@ const columnKeys = Object.keys(props.columns) as (keyof T)[];
         </tr>
       </thead>
       <tbody>
-        <template v-if="isLoading">
+        <template v-if="status === 'pending'">
           <tr>
             <td :colspan="Object.keys(columns).length + 1" class="px-4 py-48">
               <Spinner />
+            </td>
+          </tr>
+        </template>
+
+        <template v-else-if="status === 'error'">
+          <tr>
+            <td :colspan="Object.keys(columns).length + 1" class="px-4 py-48">
+              <Error />
             </td>
           </tr>
         </template>
