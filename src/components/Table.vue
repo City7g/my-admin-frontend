@@ -15,7 +15,7 @@ const columnKeys = Object.keys(props.columns) as (keyof T)[];
     <table class="whitespace-nowrap w-full text-sm text-left">
       <thead class="text-sm font-bold uppercase bg-gray-200">
         <tr>
-          <th v-for="(key, value) in columns" :key="key" class="px-4 py-3">{{ value }}</th>
+          <th v-for="(key, value) in columns" :key="key as PropertyKey" class="px-4 py-3">{{ value }}</th>
           <th class="px-4 py-3 text-right">Actions</th>
         </tr>
       </thead>
