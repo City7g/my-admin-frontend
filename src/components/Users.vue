@@ -2,10 +2,11 @@
 import { loadUsers } from '@/api'
 import Table from '@/components/Table.vue'
 import { useQuery } from '@tanstack/vue-query'
+import withNotification from '@/helpers/withNotification'
 
-const { data: users, status  } = useQuery({
+const { data: users, status } = useQuery({
   queryKey: ['users'],
-  queryFn: loadUsers
+  queryFn: async () => withNotification('users', loadUsers),
 })
 </script>
 

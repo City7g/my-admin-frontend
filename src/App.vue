@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Notification from './components/Notification.vue'
 import Users from './components/Users.vue'
 </script>
 
@@ -6,6 +7,8 @@ import Users from './components/Users.vue'
   <div class="my-10 px-4">
     <Users />
   </div>
+
+  <Notification />
 </template>
 
 <style>
