@@ -1,3 +1,4 @@
+import { isNumber } from '@/helpers/isNumber';
 import axios from 'axios'
 
 const api = axios.create({
@@ -7,7 +8,7 @@ const api = axios.create({
   },
 })
 
-const API_DELAY = Number(import.meta.env.VITE_API_DELAY) || 1000
+const API_DELAY: number = isNumber(import.meta.env.VITE_API_DELAY)
 
 api.interceptors.request.use(
   (config) => new Promise(resolve => setTimeout(() => resolve(config), API_DELAY))
