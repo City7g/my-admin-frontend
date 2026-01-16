@@ -1,2 +1,2 @@
-export type  * from './Resource'
-export type  * from './Users'
+export type * from './Resource'
+export type * from './Users'

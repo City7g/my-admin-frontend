@@ -1,3 +1,1 @@
-import { loadUsers } from './users'
-
-export { loadUsers }
+export * from './users'
