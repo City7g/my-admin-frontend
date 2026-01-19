@@ -13,4 +13,5 @@ import Users from './components/Users.vue'
 
 <style>
 @import 'tailwindcss';
+@import '@nuxt/ui';
 </style>
