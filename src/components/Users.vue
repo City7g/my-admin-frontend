@@ -5,6 +5,8 @@ import withNotification from '@/helpers/withNotification'
 import { ref } from 'vue'
 import type { User } from '@/types'
 import { dateFormat } from '@/helpers/dateFormat'
+import type { TableColumn } from '@nuxt/ui'
+import type { RequireKey } from '@/types/helpers'
 
 const changeAdminItems = ref<User['id'][]>([])
 
@@ -13,14 +15,39 @@ const { data: users, status, fetchStatus, refetch } = useQuery({
   queryFn: withNotification('users', loadUsers),
 })
 
-const { mutate: toggleAdmin } = useMutation({
+const { mutate: toggleAdmin } = useMutation<void, unknown, RequireKey<User, 'id'>>({
   mutationFn: withNotification('users', updateUser),
-  onMutate: ({ id }) => {
-    changeAdminItems.value.push(id)
+  onMutate: (vars, context) => {
+    changeAdminItems.value.push(vars.id)
+
+    let oldUser = context.client.getQueryData<User[]>(['users'])?.find(c => c.id === vars.id)
+
+    context.client.setQueryData<User[]>(['users'], users => {
+      return users?.map(user => {
+        if (user.id === vars.id) {
+          oldUser = user
+          return { ...user, isAdmin: vars.isAdmin ?? user.isAdmin }
+        } else {
+          return user
+        }
+      })
+    })
+
+    return oldUser
   },
-  onSettled: (first, data, { id }, bar) => {
-    changeAdminItems.value = changeAdminItems.value.filter(c => c !== id)
-    refetch()
+  onError(error, vars, oldUser, context) {
+    context.client.setQueryData<User[]>(['users'], users => {
+      return users?.map(user => {
+        if (user.id === vars.id) {
+          return oldUser as User
+        } else {
+          return user
+        }
+      })
+    })
+  },
+  onSettled: (first, data, vars, bar) => {
+    changeAdminItems.value = changeAdminItems.value.filter(c => c !== vars.id)
   },
 })
 
@@ -29,7 +56,7 @@ const { mutate: removeUser } = useMutation({
   onSettled: () => refetch(),
 })
 
-const columns = [
+const columns: TableColumn<User>[] = [
   {
     accessorKey: 'id',
     header: 'ID'
@@ -55,7 +82,7 @@ const columns = [
 
 <template>
   <div class="max-w-6xl mx-auto">
-    <UTable :loading="fetchStatus === 'fetching'" :data="users" class="flex-1" :columns="columns">
+    <UTable :data="users" :loading="fetchStatus === 'fetching'" class="flex-1" :columns="columns">
       <template #admin-cell="{ row }">
         <USwitch :loading="changeAdminItems.includes(row.original.id)" :modelValue="row.original.isAdmin"
           @update:model-value="toggleAdmin({ id: row.original.id, isAdmin: !row.original.isAdmin })" />
